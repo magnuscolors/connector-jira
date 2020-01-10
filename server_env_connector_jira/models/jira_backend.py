@@ -10,7 +10,9 @@ _logger = logging.getLogger(__name__)
 
 class JiraBackend(models.Model):
     _name = 'jira.backend'
-    _inherit = ["jira.backend", "server.env.mixin"]
+    # Commented as the inherited model (server.env.mixin) is not available anywhere in the code
+    # _inherit = ["jira.backend", "server.env.mixin"]
+    _inherit = ["jira.backend"]
 
     @property
     def _server_env_fields(self):

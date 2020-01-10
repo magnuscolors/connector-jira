@@ -91,6 +91,12 @@ class JiraProjectProject(models.Model):
             ('business', 'Business'),
         ]
 
+    # Newly added, copied from v11 odoo>tools>sql.py file
+    def constraint_definition(self, cr, constraintname):
+        """ Return the given constraint's definition. """
+        cr.execute("SELECT pg_get_constraintdef(oid) FROM pg_constraint WHERE conname=%s", (constraintname,))
+        return cr.fetchone()[0] if cr.rowcount else None
+
     # Disable and implement the constraint jira_binding_uniq as python because
     # we need to override the in connector_jira_service_desk and it would try
     # to create it again at every update because of the base implementation
@@ -103,15 +109,14 @@ class JiraProjectProject(models.Model):
         for (key, definition, msg) in self._sql_constraints:
             if key == 'jira_binding_uniq':
                 conname = '%s_%s' % (self._table, key)
-                has_definition = tools.constraint_definition(
-                    self.env.cr, conname
-                )
+                has_definition = self.constraint_definition(self.env.cr, conname)
                 if has_definition:
                     tools.drop_constraint(self.env.cr, self._table, conname)
             else:
                 constraints.append((key, definition, msg))
         self._sql_constraints = constraints
-        super()._add_sql_constraints()
+        # super()._add_sql_constraints()# Need to check the reason for the super class without args
+        super(JiraProjectProject, self)._add_sql_constraints()
 
     def _export_binding_domain(self):
         """Return the domain for the constraints on export bindings"""
