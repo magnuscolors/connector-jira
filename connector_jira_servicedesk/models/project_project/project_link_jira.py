@@ -13,7 +13,8 @@ class ProjectLinkJira(models.TransientModel):
 
     @api.model
     def _selection_state(self):
-        states = super()._selection_state()
+        # states = super()._selection_state() # Need to check the reason for the super class without args
+        states = super(ProjectLinkJira, self)._selection_state()
         states.append(('link_organizations', 'Link Organizations'))
         return states
 

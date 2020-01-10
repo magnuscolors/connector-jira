@@ -22,7 +22,8 @@ class JiraBackend(models.Model):
 
     @api.model
     def _selection_project_template(self):
-        selection = super()._selection_project_template()
+        # selection = super()._selection_project_template() # Need to check the reason for the super class without args
+        selection = super(JiraBackend, self)._selection_project_template()
         selection += [
             ('Basic', 'Basic (Service Desk)'),
             ('IT Service Desk', 'IT Service Desk (Service Desk)'),

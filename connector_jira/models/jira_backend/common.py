@@ -5,7 +5,7 @@
 import binascii
 import logging
 import json
-import urllib.parse
+import urlparse
 
 from contextlib import contextmanager, closing
 from datetime import datetime
@@ -300,7 +300,8 @@ class JiraBackend(models.Model):
 
     @api.model
     def create(self, values):
-        record = super().create(values)
+        # record = super().create(values) # Need to check the reason for the super class without args
+        record = super(JiraBackend, self).create(values)
         record.create_rsa_key_vals()
         return record
 
@@ -387,7 +388,7 @@ class JiraBackend(models.Model):
                 # TODO: we could update the JQL of the webhook
                 # each time a new project is sync'ed, so we would
                 # filter out the useless events
-                url = urllib.parse.urljoin(base_url,
+                url = urlparse.urljoin(base_url,
                                            '/connector_jira/webhooks/issue')
                 webhook = adapter.create_webhook(
                     name='Odoo Issues',
@@ -405,7 +406,7 @@ class JiraBackend(models.Model):
                 if not tools.config['test_enable']:
                     env.cr.commit()  # pylint: disable=invalid-commit
 
-                url = urllib.parse.urljoin(base_url,
+                url = urlparse.urljoin(base_url,
                                            '/connector_jira/webhooks/worklog')
                 webhook = adapter.create_webhook(
                     name='Odoo Worklogs',
@@ -544,7 +545,7 @@ class JiraBackend(models.Model):
 
     @api.multi
     def make_issue_url(self, jira_issue_id):
-        return urllib.parse.urljoin(
+        return urlparse.urljoin(
             self.uri, '/browse/{}'.format(jira_issue_id))
 
 

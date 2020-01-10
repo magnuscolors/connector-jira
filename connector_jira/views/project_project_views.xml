@@ -67,7 +67,7 @@
     <field name="model">project.project</field>
     <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
     <field name="arch" type="xml">
-      <button name="edit_dialog" position="after">
+      <button name="close_dialog" position="after">
         <button string="Create and Link with JIRA" name="create_and_link_jira" type="object" class="btn-primary"/>
       </button>
     </field>

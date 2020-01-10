@@ -142,5 +142,6 @@ class JiraOauthDance(Command):
 
 
 def die(message, code=1):
-    print(message, file=sys.stderr)
+    # Need to find out the reason for error
+    # print(message, file=sys.stderr)
     sys.exit(code)

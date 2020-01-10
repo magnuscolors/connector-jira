@@ -27,7 +27,8 @@ class JiraProjectProject(models.Model):
 
     @api.model
     def _selection_project_type(self):
-        selection = super()._selection_project_type()
+        # selection = super()._selection_project_type() # Need to check the reason for the super class without args
+        selection = super(JiraProjectProject, self)._selection_project_type()
         selection.append(('service_desk', 'Service Desk'))
         return selection
 
