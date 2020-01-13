@@ -46,12 +46,12 @@ class ProjectTaskImporter(Component):
 
     def _get_external_data(self):
         """Return the raw Jira data for ``self.external_id``"""
-        result = super()._get_external_data()
+        result = super(ProjectTaskImporter, self)._get_external_data()
         return result
 
     def _import_dependencies(self):
         """Import the dependencies for the record"""
-        super()._import_dependencies()
+        super(ProjectTaskImporter, self)._import_dependencies()
         jira_org_ids = self.component(
             usage='organization.from.task'
         ).get_jira_org_ids(self.external_record)

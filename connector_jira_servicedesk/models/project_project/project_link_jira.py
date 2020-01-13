@@ -13,7 +13,6 @@ class ProjectLinkJira(models.TransientModel):
 
     @api.model
     def _selection_state(self):
-        # states = super()._selection_state() # Need to check the reason for the super class without args
         states = super(ProjectLinkJira, self)._selection_state()
         states.append(('link_organizations', 'Link Organizations'))
         return states
@@ -22,7 +21,7 @@ class ProjectLinkJira(models.TransientModel):
         if self.sync_action == 'link':
             self.state = 'link_organizations'
         else:
-            super().state_exit_start()
+            super(ProjectLinkJira, self).state_exit_start()
 
     def state_exit_link_organizations(self):
         if not self.jira_project_id:
@@ -30,6 +29,6 @@ class ProjectLinkJira(models.TransientModel):
         self.state = 'issue_types'
 
     def _prepare_link_binding_values(self, jira_project):
-        values = super()._prepare_link_binding_values(jira_project)
+        values = super(ProjectLinkJira, self)._prepare_link_binding_values(jira_project)
         values['organization_ids'] = [(6, 0, self.organization_ids.ids)]
         return values

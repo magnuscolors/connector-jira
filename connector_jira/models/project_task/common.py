@@ -60,7 +60,7 @@ class JiraProjectTask(models.Model):
             raise exceptions.UserError(
                 _('A Jira task cannot be deleted.')
             )
-        return super().unlink()
+        return super(JiraProjectTask, self).unlink()
 
     @api.depends('jira_key')
     def _compute_jira_issue_url(self):

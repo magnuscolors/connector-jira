@@ -19,7 +19,7 @@ class Organization(Resource):
     """A Service Desk Organization."""
 
     def __init__(self, options, session, raw=None):
-        super().__init__(
+        super(Organization, self).__init__(
             'organization/{0}',
             options,
             session,
@@ -44,7 +44,7 @@ class OrganizationAdapter(Component):
     _desk_api_path_base = '{server}/rest/servicedeskapi/{path}'
 
     def __init__(self, work_context):
-        super().__init__(work_context)
+        super(OrganizationAdapter, self).__init__(work_context)
         self.client._session.headers.update(self._desk_headers)
 
     def read(self, id_):

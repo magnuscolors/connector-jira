@@ -126,7 +126,6 @@ class JiraProjectProject(models.Model):
             else:
                 constraints.append((key, definition, msg))
         self._sql_constraints = constraints
-        # super()._add_sql_constraints()# Need to check the reason for the super class without args
         super(JiraProjectProject, self)._add_sql_constraints()
 
     def _export_binding_domain(self):
@@ -211,7 +210,7 @@ class JiraProjectProject(models.Model):
 
     @api.model
     def create(self, values):
-        record = super().create(values)
+        record = super(JiraProjectProject, self).create(values)
         record._ensure_jira_key()
         return record
 
@@ -221,7 +220,7 @@ class JiraProjectProject(models.Model):
             raise exceptions.UserError(
                 _('The project template cannot be modified.')
             )
-        res = super().write(values)
+        res = super(JiraProjectProject, self).write(values)
         self._ensure_jira_key()
         return res
 
@@ -241,7 +240,7 @@ class JiraProjectProject(models.Model):
             raise exceptions.UserError(
                 _('Exported project cannot be deleted.')
             )
-        return super().unlink()
+        return super(JiraProjectProject, self).unlink()
 
 
 class ProjectProject(models.Model):

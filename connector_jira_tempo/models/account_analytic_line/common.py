@@ -31,7 +31,7 @@ class WorklogAdapter(Component):
         return self.client._get_url(path, base=self._tempo_api_path_base)
 
     def read(self, issue_id, worklog_id):
-        worklog = super().read(issue_id, worklog_id)
+        worklog = super(WorklogAdapter, self).read(issue_id, worklog_id)
         if self.env.context.get('jira_worklog_no_tempo_data'):
             return worklog
         with self.handle_404():
