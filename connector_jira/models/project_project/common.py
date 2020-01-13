@@ -262,7 +262,7 @@ class ProjectProject(models.Model):
     def _compute_jira_key(self):
         for project in self:
             keys = project.mapped('jira_bind_ids.jira_key')
-            project.jira_key = ', '.join(keys)
+            project.jira_key = ', '.join(str(key) for key in keys)
 
     @api.multi
     def name_get(self):

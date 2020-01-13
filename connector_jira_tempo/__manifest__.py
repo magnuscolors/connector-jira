@@ -2,8 +2,8 @@
 
 {
     'name': 'JIRA Connector Tempo',
-    'version': '11.0.1.0.0',
-    'author': 'Camptocamp,Odoo Community Association (OCA)',
+    'version': '10.0',
+    'author': 'Magnus - Willem Hulshof',
     'license': 'AGPL-3',
     'category': 'Connector',
     'depends': [
