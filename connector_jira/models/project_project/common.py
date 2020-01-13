@@ -17,6 +17,7 @@ from odoo import api, fields, models, exceptions, _, tools
 from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
+_schema = logging.getLogger('odoo.schema')
 
 
 class JiraProjectBaseFields(models.AbstractModel):
@@ -97,6 +98,16 @@ class JiraProjectProject(models.Model):
         cr.execute("SELECT pg_get_constraintdef(oid) FROM pg_constraint WHERE conname=%s", (constraintname,))
         return cr.fetchone()[0] if cr.rowcount else None
 
+    # Newly added, copied from v11 odoo>tools>sql.py file
+    def drop_constraint(self, cr, tablename, constraintname):
+        """ drop the given constraint. """
+        try:
+            with cr.savepoint():
+                cr.execute('ALTER TABLE "{}" DROP CONSTRAINT "{}"'.format(tablename, constraintname))
+                _schema.debug("Table %r: dropped constraint %r", tablename, constraintname)
+        except Exception:
+            _schema.warning("Table %r: unable to drop constraint %r!", tablename, constraintname)
+
     # Disable and implement the constraint jira_binding_uniq as python because
     # we need to override the in connector_jira_service_desk and it would try
     # to create it again at every update because of the base implementation
@@ -111,7 +122,7 @@ class JiraProjectProject(models.Model):
                 conname = '%s_%s' % (self._table, key)
                 has_definition = self.constraint_definition(self.env.cr, conname)
                 if has_definition:
-                    tools.drop_constraint(self.env.cr, self._table, conname)
+                    self.drop_constraint(self.env.cr, self._table, conname)
             else:
                 constraints.append((key, definition, msg))
         self._sql_constraints = constraints
