@@ -47,7 +47,7 @@ class TaskLinkJira(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        values = super().default_get(fields)
+        values = super(TaskLinkJira, self).default_get(fields)
         context = self.env.context
         if (context.get('active_model') == 'project.task' and
                 context.get('active_id')):

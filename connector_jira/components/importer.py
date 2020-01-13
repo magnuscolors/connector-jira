@@ -50,7 +50,7 @@ class JiraImporter(Component):
     _usage = 'record.importer'
 
     def __init__(self, work_context):
-        super().__init__(work_context)
+        super(JiraImporter, self).__init__(work_context)
         self.external_id = None
         self.external_record = None
 

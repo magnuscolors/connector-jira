@@ -55,7 +55,7 @@ class JiraModelBinder(Component):
             _logger.warning('unwrap has no effect when the '
                             'binding is not an inherits '
                             '(model %s)', self.model._name)
-        return super().to_internal(external_id, unwrap=False)
+        return super(JiraModelBinder, self).to_internal(external_id, unwrap=False)
 
     def unwrap_binding(self, binding):
         if isinstance(binding, models.BaseModel):

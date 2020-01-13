@@ -300,7 +300,6 @@ class JiraBackend(models.Model):
 
     @api.model
     def create(self, values):
-        # record = super().create(values) # Need to check the reason for the super class without args
         record = super(JiraBackend, self).create(values)
         record.create_rsa_key_vals()
         return record

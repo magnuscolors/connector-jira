@@ -10,7 +10,7 @@ class ProjectTaskMergeWizard(models.TransientModel):
     @api.multi
     def merge_tasks(self):
         self._check_jira_bindings()
-        result = super().merge_tasks()
+        result = super(ProjectTaskMergeWizard, self).merge_tasks()
         self._merge_jira_bindings()
         return result
 

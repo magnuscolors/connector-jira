@@ -29,7 +29,7 @@ class JiraAdapter(Component):
     _usage = 'backend.adapter'
 
     def __init__(self, work_context):
-        super().__init__(work_context)
+        super(JiraAdapter, self).__init__(work_context)
         self._client = None
 
     @property
